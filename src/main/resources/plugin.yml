@@ -1,0 +1,7 @@
+name: MotdAPI
+version: '${version}'
+
+main: fr.antidino.vertex.motd.motdAPI.MotdAPI
+api-version: '1.21'
+
+authors: [ Antidino ]

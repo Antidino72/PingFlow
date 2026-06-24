@@ -1,0 +1,101 @@
+# ==========================================
+# MotdAPI - Vertex Studio Schedule Config
+# ==========================================
+# Rules are matched TOP TO BOTTOM, first match wins.
+# Available match fields:
+#   year, month, day, weekday, hour, minute
+#   hour_from, hour_to (range, inclusive)
+# Available weekdays: MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
+# Color codes: & followed by a color code (e.g. &a = green, &b = cyan, &c = red...)
+# Placeholders: {hour}, {minute}, {day}, {month}, {year}
+# ==========================================
+
+default:
+  motd: "&8[&bVertex Studio&8] &7Serveur de développement\n&7Plugins &8• &7Bots &8• &7Web"
+  icon: "icon/default.png"
+
+schedule:
+
+  # ------------------------------------------
+  # SPECIAL DAYS (most precise, checked first)
+  # ------------------------------------------
+
+  # New Year's Day
+  - match: { month: 1, day: 1 }
+    motd: "&8[&bVertex Studio&8] &6Bonne année {year} ! &e🎆\n&7Plugins &8• &7Bots &8• &7Web"
+    icon: "icon/newyear.png"
+
+  # Christmas
+  - match: { month: 12, day: 25 }
+    motd: "&8[&bVertex Studio&8] &cJoyeux Noël ! &a🎄\n&7Plugins &8• &7Bots &8• &7Web"
+    icon: "icon/noel.png"
+
+  # ------------------------------------------
+  # WEEKDAY + TIME (day + hour range combined)
+  # ------------------------------------------
+
+  # Friday afternoon -> push before weekend
+  - match: { weekday: FRIDAY, hour_from: 13, hour_to: 17 }
+    motd: "&8[&bVertex Studio&8] &aVendredi aprèm, dernier push ! &e🚀\n&7Plugins &8• &7Bots &8• &7Web"
+    icon: "icon/work.png"
+
+  # Friday evening -> weekend starts
+  - match: { weekday: FRIDAY, hour_from: 18, hour_to: 23 }
+    motd: "&8[&bVertex Studio&8] &dWeek-end qui commence ! &e🎮\n&7Plugins &8• &7Bots &8• &7Web"
+    icon: "icon/weekend.png"
+
+  # ------------------------------------------
+  # WEEKDAYS (whole day)
+  # ------------------------------------------
+
+  # Monday -> back to work
+  - match: { weekday: MONDAY }
+    motd: "&8[&bVertex Studio&8] &7Début de semaine, on code ! &e💻\n&7Plugins &8• &7Bots &8• &7Web"
+    icon: "icon/work.png"
+
+  # Friday (rest of day not matched above)
+  - match: { weekday: FRIDAY }
+    motd: "&8[&bVertex Studio&8] &aVendredi, dernier push ! &e🚀\n&7Plugins &8• &7Bots &8• &7Web"
+    icon: "icon/work.png"
+
+  # Saturday & Sunday
+  - match: { weekday: SATURDAY }
+    motd: "&8[&bVertex Studio&8] &eWeek-end dev &e🎮\n&7Plugins &8• &7Bots &8• &7Web"
+    icon: "icon/weekend.png"
+  - match: { weekday: SUNDAY }
+    motd: "&8[&bVertex Studio&8] &eWeek-end dev &e🎮\n&7Plugins &8• &7Bots &8• &7Web"
+    icon: "icon/weekend.png"
+
+  # ------------------------------------------
+  # TIME RANGES (fallback for weekdays not matched above)
+  # ------------------------------------------
+
+  # Night (0h - 5h)
+  - match: { hour_from: 0, hour_to: 5 }
+    motd: "&8[&bVertex Studio&8] &8Les devs dorment... &7💤\n&7Plugins &8• &7Bots &8• &7Web"
+    icon: "icon/night.png"
+
+  # Early morning (6h - 8h)
+  - match: { hour_from: 6, hour_to: 8 }
+    motd: "&8[&bVertex Studio&8] &eLes devs se réveillent &e☕\n&7Plugins &8• &7Bots &8• &7Web"
+    icon: "icon/morning.png"
+
+  # Morning work (9h - 11h)
+  - match: { hour_from: 9, hour_to: 11 }
+    motd: "&8[&bVertex Studio&8] &eLes devs codent ! &e⚙️\n&7Plugins &8• &7Bots &8• &7Web"
+    icon: "icon/work.png"
+
+  # Lunch (12h)
+  - match: { hour: 12 }
+    motd: "&8[&bVertex Studio&8] &aLes devs mangent &e🍕\n&7Plugins &8• &7Bots &8• &7Web"
+    icon: "icon/lunch.png"
+
+  # Afternoon (13h - 17h)
+  - match: { hour_from: 13, hour_to: 17 }
+    motd: "&8[&bVertex Studio&8] &bDéveloppement en cours &e🔧\n&7Plugins &8• &7Bots &8• &7Web"
+    icon: "icon/work.png"
+
+  # Evening (18h - 23h)
+  - match: { hour_from: 18, hour_to: 23 }
+    motd: "&8[&bVertex Studio&8] &dSoirée dev &e🌙\n&7Plugins &8• &7Bots &8• &7Web"
+    icon: "icon/evening.png"

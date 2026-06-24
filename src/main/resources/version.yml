@@ -1,0 +1,47 @@
+# ==================================================
+# MotdAPI - Minecraft Protocol Versions
+# ==================================================
+# This file maps Minecraft protocol numbers to their
+# corresponding Minecraft client versions.
+#
+# Available placeholder:
+#   %version%
+#
+# Example:
+#   Protocol 772 -> 1.21.6 / 1.21.7 / 1.21.8
+#
+# If a protocol is missing, the plugin will display:
+#   Unknown version (protocol)
+#
+# To find the protocol number of a Minecraft version,
+# you can check:
+# https://minecraft.wiki/w/Protocol_version
+#
+# You can safely add new versions as they are released.
+# ==================================================
+
+# -------------------------
+# Minecraft 1.20 versions
+# -------------------------
+763: "1.20 / 1.20.1"
+764: "1.20.2"
+765: "1.20.3 / 1.20.4"
+766: "1.20.5 / 1.20.6"
+
+# -------------------------
+# Minecraft 1.21 versions
+# -------------------------
+767: "1.21"
+768: "1.21.1"
+769: "1.21.2 / 1.21.3"
+770: "1.21.4"
+771: "1.21.5"
+772: "1.21.6 / 1.21.7 / 1.21.8"
+773: "1.21.9 / 1.21.10"
+774: "1.21.11"
+
+# -------------------------
+# Experimental versions
+# -------------------------
+775: "26.1 / 26.1.1 / 26.1.2"
+776: "26.2"

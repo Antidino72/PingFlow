@@ -1,0 +1,140 @@
+# ==================================================
+# MotdAPI - Vertex Studio Configuration
+# ==================================================
+# This file controls the server MOTD and icon shown
+# in the multiplayer server list.
+#
+# Custom MOTDs are evaluated by priority.
+# The lowest priority value is checked first.
+#
+# Available placeholders:
+#   %version%   → Minecraft client version
+#   %protocol%  → Client protocol number
+#   %hostname%  → Domain used to connect
+#   %ip%        → Client IP address
+# ==================================================
+
+# --------------------------------------------------
+# GeoIP configuration.
+#
+# Allows the plugin to detect the player's country
+# using their IP address.
+#
+# enabled:
+#   true  = enable GeoIP support.
+#   false = disable country detection.
+#
+# database-file:
+#   Path to the GeoLite2 Country database.
+#   The database is not included with the plugin. Please download it here: https://github.com/P3TERX/GeoLite.mmdb/releases
+#   and We use Goelite2-country; nothing else works.
+# --------------------------------------------------
+geoip:
+  enabled: true
+  database-file: GeoIP/GeoLite2-Country.mmdb
+
+# --------------------------------------------------
+# Timezone used by time-based rules.
+#
+# Examples:
+#   Europe/Paris
+#   Europe/Madrid
+#   America/New_York
+#   Asia/Tokyo
+# --------------------------------------------------
+timezone: "Europe/Madrid"
+
+# --------------------------------------------------
+# Default MOTD.
+#
+# The first line is displayed on the top.
+# The second line is displayed below it.
+# --------------------------------------------------
+motd:
+  - "&6&lVERTEX STUDIO"
+  - "&fPlugins &8• &bWebsites &8• &dDiscord Bots"
+
+# --------------------------------------------------
+# Default server icon.
+#
+# Relative path inside the plugin folder.
+# Recommended format: 64x64 PNG.
+# --------------------------------------------------
+icon:
+  "icons/mc.jpg"
+
+# ==================================================
+# Custom MOTDs
+# ==================================================
+#
+# Available types:
+#
+# clock   → Time-based MOTD.
+# country → Country-based MOTD.
+# random  → Randomly selected MOTD.
+#
+# priority:
+#   1  = highest priority.
+#   99 = lowest priority.
+#
+# The first matching rule will be used.
+# ==================================================
+custom-motd:
+
+  # ----------------------------------------------
+  # Time-based MOTD.
+  # The plugin will display a MOTD depending
+  # on the current time.
+  # ----------------------------------------------
+  Clock:
+    type: "clock"
+    priority: 1
+
+
+  # ----------------------------------------------
+  # Country-based MOTD.
+  #
+  # country:
+  #   ISO country code returned by GeoIP.
+  #
+  # icon:
+  #   Server icon used when this rule matches.
+  #
+  # text:
+  #   MOTD lines displayed to the player.
+  # ----------------------------------------------
+  RegionFr:
+    type: "country"
+    priority: 3
+    icon: "icons/fr.png"
+    text:
+      - "&9FR %hostname%"
+      - "&7You are using %version% (%protocol%)"
+    country: "FR"
+
+  # ----------------------------------------------
+  # Random MOTD.
+  #
+  # A random icon and a random text entry will
+  # be selected every time the server is pinged.
+  # ----------------------------------------------
+  Random:
+    type: "random"
+    priority: 2
+
+    icon:
+      - "icons/fr.png"
+      - "icons/mc.jpg"
+
+    text:
+      - "&9FR &fHello France!\n&7Enjoy your time on the server."
+      - "&9FR &fWelcome French players!\n&7Have a great adventure."
+      - "&9FR &fPlaying from France?\n&7You're in the right place."
+      - "&9FR &fFrench players welcome!\n&7Enjoy your adventure."
+      - "&9FR &fHello French community!\n&7Have a wonderful time."
+      - "&9FR &fFrance is in the spotlight!\n&7Enjoy the server."
+      - "&9FR &fA French community welcomes you.\n&7Thanks for visiting."
+      - "&9FR &fGreetings France!\n&7Have fun and enjoy your stay."
+      - "&9FR &fHello FR players!\n&7Enjoy your adventure."
+      - "&9FR &fWelcome to all French players!\n&7Thanks for joining us."
+      -

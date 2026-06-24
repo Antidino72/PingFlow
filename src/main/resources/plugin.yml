@@ -3,5 +3,10 @@ version: '${version}'
 
 main: fr.antidino.vertex.motd.motdAPI.MotdAPI
 api-version: '1.21'
-
-authors: [ Antidino ]
+description: "Displays a dynamic MOTD and server icon based on the player's country, IP, DNS or time of day."
+authors: [ Antidino ,Vertex Studio]
+commands:
+  motd:
+    description: MainCommand to MotdApi
+    permission: motdapi.admin
+    aliases: motdapi

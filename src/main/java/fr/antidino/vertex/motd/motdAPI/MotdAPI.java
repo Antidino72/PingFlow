@@ -3,17 +3,19 @@ package fr.antidino.vertex.motd.motdAPI;
 import fr.antidino.vertex.motd.motdAPI.commands.MainCommand;
 import fr.antidino.vertex.motd.motdAPI.listenners.ServerListPingListenner;
 import fr.antidino.vertex.motd.motdAPI.manager.GeoIPManager;
+import fr.antidino.vertex.motd.motdAPI.manager.IPDatabaseManager;
 import fr.antidino.vertex.motd.motdAPI.manager.MinecraftVersionManager;
 import fr.antidino.vertex.motd.motdAPI.manager.ScheduleManager;
 import fr.antidino.vertex.motd.motdAPI.resolvers.IconResolver;
 import fr.antidino.vertex.motd.motdAPI.resolvers.MotdResolver;
-import org.bukkit.Bukkit;
+
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.net.InetAddress;
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -21,6 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class MotdAPI extends JavaPlugin {
     public ScheduleManager scheduleManager;
     public FileConfiguration config;
+    public IPDatabaseManager ipDatabaseManager;
     public GeoIPManager  geoIPManager;
     public MotdResolver motdResolver;
     public IconResolver  iconResolver;
@@ -44,6 +47,12 @@ public final class MotdAPI extends JavaPlugin {
         );
         versionManager = new MinecraftVersionManager(this);
         versionManager.load();
+        ipDatabaseManager = new IPDatabaseManager(this);
+        try {
+            ipDatabaseManager.connect();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         config = this.getConfig();
         geoIPManager = new GeoIPManager(this);
@@ -62,11 +71,17 @@ public final class MotdAPI extends JavaPlugin {
         }
 
         getServer().getPluginManager().registerEvents(new ServerListPingListenner(this),this);
-        getLogger().info("[MotdAPI] Plugin has Enabled");
+        getLogger().info("Plugin has Enabled");
 
     }
     public void reload(){
         this.reloadConfig();
+        ipDatabaseManager.disconnect();
+        try {
+            ipDatabaseManager.connect();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         versionConfig = YamlConfiguration.loadConfiguration(
                 new File(getDataFolder(), "version.yml")
@@ -87,7 +102,8 @@ public final class MotdAPI extends JavaPlugin {
     }
     @Override
     public void onDisable() {
-        getLogger().info("[MotdAPI] Plugin has Disabled");
+        ipDatabaseManager.disconnect();
+        getLogger().info("Plugin has Disabled");
     }
 
 }

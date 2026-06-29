@@ -1,5 +1,5 @@
 # ==================================================
-# MotdAPI - Vertex Studio Configuration
+# Pingflow - Vertex Studio Configuration
 # ==================================================
 # This file controls the server MOTD and icon shown
 # in the multiplayer server list.
@@ -32,6 +32,15 @@
 geoip:
   enabled: true
   database-file: GeoIP/GeoLite2-Country.mmdb
+
+database:
+  type: sqlite  # sqlite ou mysql
+  # MySQL only
+  host: "localhost"
+  port: 3306
+  name: "pingflow"
+  user: "root"
+  password: "password"
 
 # --------------------------------------------------
 # Timezone used by time-based rules.
@@ -137,4 +146,3 @@ custom-motd:
       - "&9FR &fGreetings France!\n&7Have fun and enjoy your stay."
       - "&9FR &fHello FR players!\n&7Enjoy your adventure."
       - "&9FR &fWelcome to all French players!\n&7Thanks for joining us."
-      -

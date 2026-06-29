@@ -1,5 +1,5 @@
 # ==========================================
-# MotdAPI - Vertex Studio Schedule Config
+# PingFlow - Vertex Studio Schedule Config
 # ==========================================
 # Rules are matched TOP TO BOTTOM, first match wins.
 # Available match fields:

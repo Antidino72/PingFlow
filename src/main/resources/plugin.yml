@@ -1,12 +1,14 @@
-name: MotdAPI
+name: PingFlow
 version: '${version}'
 
 main: fr.antidino.vertex.motd.motdAPI.MotdAPI
 api-version: '1.21'
 description: "Displays a dynamic MOTD and server icon based on the player's country, IP, DNS or time of day."
-authors: [ Antidino ,Vertex Studio]
+authors: [ Antidino ,Vertex Studio ]
+website: https://discord.gg/6JdMA2X45m
 commands:
-  motd:
+  pingflow:
     description: MainCommand to MotdApi
     permission: motdapi.admin
-    aliases: motdapi
+    aliases: motd
+

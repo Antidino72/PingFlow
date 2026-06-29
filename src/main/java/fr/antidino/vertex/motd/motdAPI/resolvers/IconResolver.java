@@ -15,12 +15,12 @@ import java.util.List;
 
 public class IconResolver {
     MotdAPI motdAPI;
-    private final Map<String, CachedServerIcon> cache = new HashMap<String, CachedServerIcon>();
+    public final Map<String, CachedServerIcon> cache = new HashMap<String, CachedServerIcon>();
     private Random random = new Random();
     public IconResolver(MotdAPI motdAPI) {
         this.motdAPI = motdAPI;
     }
-    public void init() throws Exception {
+    public void init() {
         FileConfiguration config = motdAPI.config;
 
         // ✅ Icône default avec resize

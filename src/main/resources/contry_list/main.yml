@@ -2,3 +2,9 @@
 # BLACKLIST , WHITELIST , NONE
 mode : BLACKLIST
 unknown-result: ALLOW
+
+kick-message: |
+    <red><bold>Connexion refusée</bold></red>
+    <gray>Ton pays n'est pas autorisé sur ce serveur.</gray>
+    
+    <yellow><hover:show_text:'<white>Contacte le staff'>[Pourquoi ?]</hover></yellow>

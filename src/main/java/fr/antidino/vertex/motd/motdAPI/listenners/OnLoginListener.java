@@ -3,6 +3,7 @@ package fr.antidino.vertex.motd.motdAPI.listenners;
 
 import fr.antidino.vertex.motd.motdAPI.MotdAPI;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,6 +18,23 @@ public class OnLoginListener implements Listener {
     public OnLoginListener(MotdAPI plugin){
         this.plugin = plugin;
     }
+    private Component getKickMessage(){
+        String rawMessage = plugin.getConfig().getString(
+                "kick-message",
+                "<red>Connexion refusée</red>"
+        );
+
+        return MiniMessage.miniMessage()
+                .deserialize(rawMessage.replace("\r\n", "\n"))
+                .replaceText(
+                        net.kyori.adventure.text.TextReplacementConfig.builder()
+                                .match("\n")
+                                .replacement(Component.newline())
+                                .build()
+                );
+
+
+    }
     @EventHandler
     public void onLogin(PlayerLoginEvent event){
         String ip = event.getAddress().getHostAddress();
@@ -28,10 +46,10 @@ public class OnLoginListener implements Listener {
                     event.allow();
                 }
                 case "DENY" : {
-                    event.disallow(PlayerLoginEvent.Result.KICK_OTHER, Component.text("Your Country isn't allowed on this server"));
+                    event.disallow(PlayerLoginEvent.Result.KICK_OTHER, getKickMessage());
                 }
                 default:
-                    event.disallow(PlayerLoginEvent.Result.KICK_OTHER, Component.text("Your Country isn't allowed on this server"));
+                    event.disallow(PlayerLoginEvent.Result.KICK_OTHER, getKickMessage());
             }
         }
         switch (plugin.serverMode.getServerside()){
@@ -39,7 +57,7 @@ public class OnLoginListener implements Listener {
                 FileConfiguration blacklist = plugin.blacklistConfig;
                 for (String country : blacklist.getStringList("country")) {
                     if (country.equalsIgnoreCase(country_player)){
-                        event.disallow(PlayerLoginEvent.Result.KICK_OTHER, Component.text("Your Country isn't allowed on this server"));
+                        event.disallow(PlayerLoginEvent.Result.KICK_OTHER, getKickMessage());
                     }
                 }
                 break;
@@ -48,7 +66,7 @@ public class OnLoginListener implements Listener {
                 List<String> whitelist = plugin.whitelistConfig.getStringList("country");
                 for (String country : whitelist) {
                     if (!country.equalsIgnoreCase(country_player)){
-                        event.disallow(PlayerLoginEvent.Result.KICK_OTHER, Component.text("Your Country isn't allowed on this server"));
+                        event.disallow(PlayerLoginEvent.Result.KICK_OTHER, getKickMessage());
                     }
                 }
                 break;

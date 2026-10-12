@@ -15,10 +15,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.net.InetAddress;
 import java.sql.SQLException;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Objects;
 
 
 public final class MotdAPI extends JavaPlugin {
@@ -61,8 +59,8 @@ public final class MotdAPI extends JavaPlugin {
         iconResolver = new IconResolver(this);
         scheduleManager = new ScheduleManager(this);
         scheduleManager.load();
-        this.getCommand("motd").setExecutor(new MainCommand(this));
-        this.getCommand("motd").setTabCompleter(new MainCommand(this));
+        Objects.requireNonNull(this.getCommand("motd")).setExecutor(new MainCommand(this));
+        Objects.requireNonNull(this.getCommand("motd")).setTabCompleter(new MainCommand(this));
 
         try {
             iconResolver.init();

@@ -13,9 +13,9 @@ public class ServerMode {
     public void updateAccessServerMode(){
         FileConfiguration configuration = plugin.countryListConfig;
         switch (configuration.getString("mode","NONE")){
-            case "NONE": serverside = ServerModeEnum.NONE;
-            case "BLACKLIST" : serverside = ServerModeEnum.BLACKLIST;
-            case "WHITELIST" : serverside = ServerModeEnum.WHITELIST;
+            case "NONE": serverside = ServerModeEnum.NONE; break;
+            case "BLACKLIST" : serverside = ServerModeEnum.BLACKLIST; break;
+            case "WHITELIST" : serverside = ServerModeEnum.WHITELIST; break;
         }
     }
     public ServerModeEnum getServerside(){

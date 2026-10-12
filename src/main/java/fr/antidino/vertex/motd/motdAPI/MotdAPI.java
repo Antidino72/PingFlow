@@ -6,6 +6,7 @@ import fr.antidino.vertex.motd.motdAPI.manager.GeoIPManager;
 import fr.antidino.vertex.motd.motdAPI.manager.IPDatabaseManager;
 import fr.antidino.vertex.motd.motdAPI.manager.MinecraftVersionManager;
 import fr.antidino.vertex.motd.motdAPI.manager.ScheduleManager;
+import fr.antidino.vertex.motd.motdAPI.manager.countryList.ServerMode;
 import fr.antidino.vertex.motd.motdAPI.resolvers.IconResolver;
 import fr.antidino.vertex.motd.motdAPI.resolvers.MotdResolver;
 
@@ -30,28 +31,19 @@ public final class MotdAPI extends JavaPlugin {
 
     public FileConfiguration versionConfig;
     public FileConfiguration clockConfig;
+
     public FileConfiguration blacklistConfig;
+    public FileConfiguration countryListConfig;
+    public FileConfiguration whitelistConfig;
+
+    public ServerMode serverMode;
 
     public MinecraftVersionManager versionManager;
-    public static final Map<InetAddress, String> hostnameCache = new ConcurrentHashMap<>();
-
 
     @Override
     public void onEnable() {
+        initConfigs();
 
-        this.saveDefaultConfig();
-        saveResource("country_list/blacklist.yml",false);
-        blacklistConfig = YamlConfiguration.loadConfiguration(
-                new File(getDataFolder(),"country_list/blacklist.yml")
-        );
-        saveResource("version.yml", false);
-        versionConfig = YamlConfiguration.loadConfiguration(
-                new File(getDataFolder(), "version.yml")
-        );
-        saveResource("clock_config.yml", false);
-        clockConfig = YamlConfiguration.loadConfiguration(
-                new File(getDataFolder(), "clock_config.yml")
-        );
         versionManager = new MinecraftVersionManager(this);
         versionManager.load();
         ipDatabaseManager = new IPDatabaseManager(this);
@@ -60,7 +52,8 @@ public final class MotdAPI extends JavaPlugin {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
+        serverMode = new ServerMode(this);
+        serverMode.updateAccessServerMode();
         config = this.getConfig();
         geoIPManager = new GeoIPManager(this);
         geoIPManager.init();
@@ -81,16 +74,56 @@ public final class MotdAPI extends JavaPlugin {
         getLogger().info("Plugin has Enabled");
 
     }
+    public void initConfigs(){
+        this.saveDefaultConfig();
+
+        /*
+                Countrylist Syteme
+        */
+        saveResource("country_list/blacklist.yml",false);
+        blacklistConfig = YamlConfiguration.loadConfiguration(
+                new File(getDataFolder(),"country_list/blacklist.yml")
+        );
+        saveResource("country_list/whitelist.yml",false);
+        whitelistConfig = YamlConfiguration.loadConfiguration(
+                new File(getDataFolder(),"country_list/whitelist.yml")
+        );
+        saveResource("country_list/main.yml",false);
+        countryListConfig = YamlConfiguration.loadConfiguration(
+                new File(getDataFolder(),"country_list/main.yml")
+        );
+        /*
+
+                MOTD Syteme
+         */
+
+        saveResource("version.yml", false);
+        versionConfig = YamlConfiguration.loadConfiguration(
+                new File(getDataFolder(), "version.yml")
+        );
+        saveResource("clock_config.yml", false);
+        clockConfig = YamlConfiguration.loadConfiguration(
+                new File(getDataFolder(), "clock_config.yml")
+        );
+    }
     public void reload(){
         this.reloadConfig();
+
         ipDatabaseManager.disconnect();
         try {
             ipDatabaseManager.connect();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        countryListConfig = YamlConfiguration.loadConfiguration(
+                new File(getDataFolder(),"country_list/main.yml")
+        );
         blacklistConfig = YamlConfiguration.loadConfiguration(
           new File(getDataFolder(),"country_list/blacklist.yml")
+        );
+        whitelistConfig = YamlConfiguration.loadConfiguration(
+                new File(getDataFolder(),"country_list/whitelist.yml")
         );
         versionConfig = YamlConfiguration.loadConfiguration(
                 new File(getDataFolder(), "version.yml")
@@ -108,6 +141,7 @@ public final class MotdAPI extends JavaPlugin {
         }
         scheduleManager = new ScheduleManager(this);
         scheduleManager.load();
+        serverMode.updateAccessServerMode();
     }
     @Override
     public void onDisable() {

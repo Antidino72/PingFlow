@@ -1,1 +1,4 @@
-mode : blacklist
+
+# BLACKLIST , WHITELIST , NONE
+mode : BLACKLIST
+unknown-result: ALLOW

@@ -27,8 +27,11 @@ public final class MotdAPI extends JavaPlugin {
     public GeoIPManager  geoIPManager;
     public MotdResolver motdResolver;
     public IconResolver  iconResolver;
+
     public FileConfiguration versionConfig;
     public FileConfiguration clockConfig;
+    public FileConfiguration blacklistConfig;
+
     public MinecraftVersionManager versionManager;
     public static final Map<InetAddress, String> hostnameCache = new ConcurrentHashMap<>();
 
@@ -37,6 +40,10 @@ public final class MotdAPI extends JavaPlugin {
     public void onEnable() {
 
         this.saveDefaultConfig();
+        saveResource("country_list/blacklist.yml",false);
+        blacklistConfig = YamlConfiguration.loadConfiguration(
+                new File(getDataFolder(),"country_list/blacklist.yml")
+        );
         saveResource("version.yml", false);
         versionConfig = YamlConfiguration.loadConfiguration(
                 new File(getDataFolder(), "version.yml")
@@ -82,7 +89,9 @@ public final class MotdAPI extends JavaPlugin {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
+        blacklistConfig = YamlConfiguration.loadConfiguration(
+          new File(getDataFolder(),"country_list/blacklist.yml")
+        );
         versionConfig = YamlConfiguration.loadConfiguration(
                 new File(getDataFolder(), "version.yml")
         );
